@@ -2,198 +2,114 @@
  * @author Kate
  */
 
+// type: ["option1", "option2"]
+// type: "option1 option2".split(" ")
 var grammars = {
     dnd: {
+      // Character Creation
       gender:["Male", "Female"],
       class: ["Cleric", "Fighter", "Rogue", "Wizard", "Barbarian", "Bard", "Druid", "Monk", "Paladin", "Ranger", "Sorcerer", "Warlock"],
       race: ["Dwarf", "Elf", "Halfling", "Human"],
+
+      // NAMES
+      // Dwarf Names
       dwarfMale:"Adrik, Alberich, Baern, Barendd, Brottor, Bruenor, Dain, Darrak, Delg, Eberk, Einkil, Fargrim, Flint, Gardain, Harbek, Kildrak, Morgran, Orsik, Oskar, Rangrim, Rurik, Taklinn, Thoradin, Thorin, Tordek, Traubon, Travok, Ulfgar, Veit, Vondal".split(", "),
       dwarfFem:"Amber, Artin, Audhild, Bardryn, Dagnal, Diesa, Eldeth, Falkrunn, Finellen, Gunnloda, Gurdis, Helja, Hlin, Kathra, Kristryd, Ilde, Liftrasa, Mardred, Riswynn, Sannl, Torbera, Torgga, Vistra".split(", "),
       dwarfClan:"Balderk, Battlehammer, Brawnanvil, Dankil, Fireforge, Frostbeard, Gorunn, Holderhek, Ironfist, Loderr, Lutgehr, Rumnaheim, Strakeln, Torunn, Ungart".split(", "),
 
+      // Elf Names
+      elfChild: "Ara, Bryn, Del, Eryn, Faen, Innil, Lael, Mella, Naill, Naeris, Phann, Rael, Rinn, Sai, Syllin, Thia, Vall".split(", "),
+      elfMale: "Adran, Aelar, Aramil, Arannis, Aust, Beiro, Berrian, Carric, Enialis, Erdan, Erevan, Galinndan, Hadarai, Heian, Himo, Immeral, Ivellios, Laucian, Mindartis, Paelias, Peren, Quarion, Riardon, Rolen, Soveliss, Thamior, Tharivol, Theren, Varis".split(", "),
+      elfFem: "Adrie, Althaea, Anastrianna, Andraste, Antinua, Bethrynna, Birel, Caelynn, Drusilia, Enna, Felosial, Ielenia, Jelenneth, Keyleth, Leshanna, Lia, Meriele, Mialee, Naivara, Quelenna, Quillathe, Sariel, Shanairra, Shava, Silaqui, Theirastra, Thia, Vadania, Valanthe, Xanaphia".split(", "),
+      elfClan: "Amakiir (Gemflower), Amastacia (Starflower), Galanodel (Moonwhisper), Holimion (Diamonddew), Ilphelkiir (Gemblossom), Liadon (Silverfrond), Meliamne (Oakenheel), Naïlo (Nightbreeze), Siannodel (Moonbrook), Xiloscient (Goldpetal)".split(", "),
+      elfMaleFull: "#elfMale# #elfClan#",
+      elfFemFull: "#elfFem# #elfClan#",
+
+      //Halfling Names
+      halflingMale: "Alton, Ander, Cade, Corrin, Eldon, Errich, Finnan, Garret, Lindal, Lyle, Merric, Milo, Osborn, Perrin, Reed, Roscoe, Wellby".split(", "),
+      halflingFem: "Andry, Bree, Callie, Cora, Euphemia, Jillian, Kithri, Lavinia, Lidda, Merla, Nedda, Paela, Portia, Seraphina, Shaena, Trym, Vani, Verna".split(", "),
+      halflingClan: "Brushgather, Goodbarrel, Greenbottle, High-hill, Hilltopple, Leagallow, Tealeaf, Thorngage, Tosscobble, Underbough".split(", "),
+      halflingMaleFull: "#halflingMale# #halflingClan#",
+      halflingFemFull: "#halflingFem# #halflingClan#",
+
+      // Human Names & Races
+      humanRace: ["Calishite", "Chondathan", "Damaran", "Illuskan", "Mulan", "Rashemi", "Shou", "Tethyrian", "Turami"],
+      calMale: "Aseir, Bardeid, Haseid, Khemed, Mehmen, Sudeiman, Zasheir".split(", "),
+      calFem: "Atala, Ceidil, Hama, Jasmal, Meilil, Seipora, Yasheira, Zasheida".split(", "),
+      calSur: "Basha, Dumein, Jassan, Khalid, Mostana, Pashar, Rein".split(", "),
+      calMaleFull: "#calMale# #calSur#",
+      calFemFull: "#calFem# #calSur#",
+      choMale: "Darvin, Dorn, Evendur, Gorstag, Grim, Helm, Malark, Morn, Randal, Stedd".split(", "),
+      choFem: "Arveene, Esvele, Jhessail, Kerri, Lureene, Miri, Rowan, Shandri, Tessele".split(", "),
+      choSur: "Amblecrown, Buckman, Dundragon, Evenwood, Greycastle, Tallstag".split(", "),
+      choMaleFull: "#choMale# #choSur#",
+      choFemFull: "#choFem# #choSur#",
+      damMale: "Bor, Fodel, Glar, Grigor, Igan, Ivor, Kosef, Mival, Orel, Pavel, Sergor".split(", "),
+      damFem: "Alethra, Kara, Katernin, Mara, Natali, Olma, Tana, Zora".split(", "),
+      damSur: "Bersk, Chernin, Dotsk, Kulenov, Marsk, Nemetsk, Shemov, Starag".split(", "),
+      damMaleFull: "#damMale# #damSur#",
+      damFemFull: "#damFem# #damSur#",
+      illMale: "Ander, Blath, Bran, Frath, Geth, Lander, Luth, Malcer, Stor, Taman, Urth".split(", "),
+      illFem: "Amafrey, Betha, Cefrey, Kethra, Mara, Olga, Silifrey, Westra".split(", "),
+      illSur: "Brightwood, Helder, Hornraven, Lackman, Stormwind, Windrivver".split(", "),
+      illMaleFull: "#illMale# #illSur#",
+      illFemFull: "#illFem# #illSur#",
+      mulMale: "Aoth, Bareris, Ehput-Ki, Kethoth, Mumed, Ramas, So-Kehur, Thazar-De, Urhur".split(", "),
+      mulFem: "Arizima, Chathi, Nephis, Nulara, Murithi, Sefris, Thola, Umara, Zolis".split(", "),
+      mulSur: "Ankhalab, Anskuld, Fezim, Hahpet, Nathandem, Sepret, Uuthrakt".split(", "),
+      mulMaleFull: "#mulMale# #mulSur#",
+      mulFemFull: "#mulFem# #mulSur#",
+      rasMale: "Borivik, Faurgar, Jandar, Kanithar, Madislak, Ralmevik, Shaumar, Vladislak".split(", "),
+      rasFem: "Fyevarra, Hulmarra, Immith, Imzel, Navarra, Shevarra, Tammith, Yuldra".split(", "),
+      rasSur: "Chergoba, Dyernina, Iltazyara, Murnyethara, Stayanoga, Ulmokina".split(", "),
+      rasMaleFull: "#rasMale# #rasSur#",
+      rasFemFull: "#rasFem# #rasSur#",
+      shoMale: "An, Chen, Chi, Fai, Jiang, Jun, Lian, Long, Meng, On, Shan, Shui, Wen".split(", "),
+      shoFem: "Bai, Chao, Jia, Lei, Mei, Qiao, Shui, Tai".split(", "),
+      shoSur: "Chien, Huang, Kao, Kung, Lao, Ling, Mei, Pin, Shin, Sum, Tan, Wan".split(", "),
+      shoMaleFull: "#shoMale# #shoSur#",
+      shoFemFull: "#shoFem# #shoSur#",
+      tetMale: "#choMale#", // "Tethyrians primarily use Chondathan names"
+      tetFem: "#choFem#",
+      tetSur: "#choSur#",
+      tetMaleFull: "#tetMale# #tetSur#",
+      tetFemFull: "#tetFem# #tetSur#",
+      turMale: "Anton, Diero, Marcon, Pieron, Rimardo, Romero, Salazar, Umbero".split(", "),
+      turFem: "Balama, Dona, Faila, Jalana, Luisa, Marta, Quara, Selise, Vonda".split(", "),
+      turSur: "Agosto, Astorio, Calabra, Domine, Falone, Marivaldi, Pisacar, Ramondo".split(", "),
+      turMaleFull: "#turMale# #turSur#",
+      turFemFull: "#turFem# #turSur#",
+      humanMaleFirst: ["#calMale#", "#choMale#", "#damMale#", "#illMale#", "#mulMale#", "#rasMale#", "#shoMale#", "#tetMale#", "#turMale#"],
+      humanMaleFull: ["#calMaleFull#", "#choMaleFull#", "#damMaleFull#", "#illMaleFull#", "#mulMaleFull#", "#rasMaleFull#", "#shoMaleFull#", "#tetMaleFull#", "#turMaleFull#"],
+      humanFemFirst: ["#calFem#", "#choFem#", "#damFem#", "#illFem#", "#mulFem#", "#rasFem#", "#shoFem#", "#tetFem#", "#turFem#"],
+      humanFemFull: ["#calFemFull#", "#choFemFull#", "#damFemFull#", "#illFemFull#", "#mulFemFull#", "#rasFemFull#", "#shoFemFull#", "#tetFemFull#", "#turFemFull#"],
+
+      // Left off here T___T
+      //humanID: "[heroName:#humanMaleFull#][heroRace:#humanRace#]of the _____ race",
+
+
+
+
+      // Monster
+      size: ["Tiny", "Small", "Medium", "Large", "Huge", "Gargantuan"],
+      monsterType: ["Aberration", "Beast", "Celestial", "Construct", "Elemental", "Fey", "Fiend", "Giant", "Humanoid", "Monstrosity", "Ooze", "Plant", "Undead"],
       monster: ["Aarakocra","Aboleth","Acolyte","Acolyte","Adult Blue Dragon","Adult White Dragon","Air Elemental","Ambush Drake","Angels","Animated Objects","Ankheg","Ape","Archmage","Assassin","Assassin","Awakened Shrub","Awakened Tree","Axe Beak","Azbara Jos","Azer","Baboon","Badger","Bandit","Bandit","Bandit Captain","Banshee","Basilisk","Bat","Behir","Beholders","Berserker","Berserker","Black Bear","Blagothkus","Blights","Blink Dog","Blood Hawk","Boar","Brown Bear","Bugbears","Bulette","Bullywug","Bullywug","Cambion","Camel","Captain Othelstan","Carrion Crawler","Cat","Centaur","Chimera","Chuul","Cloaker","Cockatrice","Commoner","Commoner","Constrictor Snake","Couatl","Crab","Crawling Claw","Crocodile","Crocodile","Cult Fanatic","Cultist","Cultist","Cyclops","Darkmantle","Death Dog","Death Knight","Deer","Deer","Demilich","Demons","Devils","Dinosaurs","Dire Wolf","Displacer Beast","Doppelganger","Doppelganger","Dracolich","Draft Horse","Dragon Turtle","Dragon, Shadow","Dragonclaw","Dragons","Dragonwing","Dralmorrer Borngray","Drider","Druid","Dryad","Duergar","Eagle","Elementals","Elephant","Elk","Elk","Elves: Drow","Empyrean","Ettercap","Ettercap","Ettin","Faerie Dragon","Flameskull","Flumph","Flying Snake","Fomorian","Four-Armed Troll","Frog","Frulam Mondath","Fungi","Galeb Duhr","Gargoyle","Gargoyle","Genies","Ghost","Ghouls","Giant Ape","Giant Badger","Giant Bat","Giant Boar","Giant Centipede","Giant Centipede","Giant Constrictor Snake","Giant Crab","Giant Crocodile","Giant Eagle","Giant Elk","Giant Fire Beetle","Giant Frog","Giant Frog","Giant Goat","Giant Hyena","Giant Lizard","Giant Lizard","Giant Octopus","Giant Owl","Giant Poisonous Snake","Giant Rat","Giant Scorpion","Giant Sea Horse","Giant Shark","Giant Spider","Giant Spider","Giant Toad","Giant Vulture","Giant Wasp","Giant Weasel","Giant Wolf Spider","Giants","Gibbering Mouther","Gith","Gladiator","Gnolls","Gnome, Deep (Svirfneblin)","Goat","Goblins","Golems","Gorgon","Gray Ooze","Grell","Grick","Griffon","Griffon","Grimlock","Guard","Guard","Guard Drake","Hags","Half-Dragon","Harpy","Hawk","Hell Hound","Helmed Horror","Helmed Horror","Hippogriff","Hobgoblin","Hobgoblin","Hobgoblin Captain","Homunculus","Hook Horror","Hunter Shark","Hydra","Hyena","Intellect Devourer","Invisible Stalker","Jackal","Jackalwere","Jamna Gleamsilver","Kenku","Killer Whale","Knight","Knight","Kobold","Kobold","Kraken","Kuo-toa","Lamia","Langdedrosa Cyanwrath","Lich","Lion","Lizard","Lizardfolk","Lizardfolk","Lycanthropes","Mage","Mage","Magmin","Mammoth","Manticore","Mastiff","Medusa","Mephits","Merfolk","Merrow","Mimic","Mind Flayer","Minotaur","Modrons","Mule","Mummies","Myconids","Nagas","Nightmare","Noble","Noble","Nothic","Octopus","Ogre","Ogre","Oni","Oozes","Orc","Orcs","Otyugh","Otyugh","Owl","Owlbear","Panther","Pegasus","Peryton","Peryton","Pharblex Spattergoo","Phase Spider","Piercer","Pixie","Poisonous Snake","Polar Bear","Pony","Priest","Priest","Pseudodragon","Purple Worm","Quaggoth","Quipper","Rakshasa","Rat","Rath Modar","Raven","Reef Shark","Remorhaz","Revenant","Rezmir","Rhinoceros","Riding Horse","Roc","Roper","Roper","Rug of Smothering","Rust Monster","Saber-Toothed Tiger","Sahuagin","Salamanders","Satyr","Scarecrow","Scorpion","Scout","Scout","Sea Horse","Shadow","Shambling Mound","Shambling Mound","Shield Guardian","Skeletons","Slaadi","Specter","Specter","Sphinxes","Spider","Sprite","Spy","Spy","Stirge","Stirge","Stone Giant","Stone Golem","Succubus/Incubus","Swarm of Bats","Swarm of Centipedes","Swarm of Insects","Swarm of Insects","Swarm of Poisonous Snakes","Swarm of Quippers","Swarm of Rats","Swarm of Rats","Swarm of Ravens","Talis the White","Tarrasque","Thri-Kreen","Thug","Tiger","Treant","Tribal Warrior","Troglodyte","Troglodyte","Troll","Troll","Umber Hulk","Unicorn","Vampire","Vampire Spawn","Vampires","Variants","Veteran","Veteran","Violet Fungus","Vulture","Warhorse","Water Weird","Weasel","Wight","Will-o'-Wisp","Will-o'-Wisp","Winged Kobold","Winter Wolf","Wolf","Worg","Wraith","Wyvern","Wyvern","Xorn","Yeti","Yuan-ti","Yuan-ti","Yuan-ti Malison","Yuan-ti Pureblood","Yugoloths","Zombies"],
+      // Grapple Rules for Monsters
+
+
+      // Actions
+      // Spellcasting
+      // Melee Attacks
+      // Ranged Attacks
+      // Ammunition
+      // Reaction
+
+      // Equipment
+      // Legendary Actions
+      // Legendary Lair
+      // Lair Actions
+      // Regional Effects
       // Final Sentence Generator
       origin: ["You are a #gender# #race# by the name of #dwarfMale#!"]
     },
-
-    nightvale : {
-        introTheWeather : ["And now, the weather."],
-        instrument : ["ukulele", "vocals", "guitar", "clarinet", "piano", "harmonica", "sitar", "tabla", "harp", "dulcimer", "violin", "accordion", "concertina", "fiddle", "tamborine", "bagpipe", "harpsichord", "euphonium"],
-        musicModifier : ["heavy", "soft", "acoustic", "psychedelic", "light", "orchestral", "operatic", "distorted", "echoing", "melodic", "atonal", "arhythmic", "rhythmic", "electronic"],
-        musicGenre : ["metal", "electofunk", "jazz", "salsa", "klezmer", "zydeco", "blues", "mariachi", "flamenco", "pop", "rap", "soul", "gospel", "buegrass", "swing", "folk"],
-        musicPlays : ["echoes out", "reverberates", "rises", "plays"],
-        musicAdv : ["too quietly to hear", "into dissonance", "into a minor chord", "changing tempo", "to a major chord", "staccatto", "into harmony", "without warning", "briskly", "under the melody", "gently", "becoming #musicGenre#"],
-        song : ["melody", "dirge", "ballad", "poem", "beat poetry", "slam poetry", "spoken word performance", "hymn", "song", "tone poem", "symphony"],
-        musicAdj : ["yielding", "firm", "joyful", "catchy", "folksy", "harsh", "strong", "soaring", "rising", "falling", "fading", "frantic", "calm", "childlike", "rough", "sensual", "erotic", "frightened", "sorrowful", "gruff", "smooth"],
-        themeAdj : ["lost", "desired", "redeemed", "awakened", "forgotten", "promised", "broken", "forgiven", "remembered", "betrayed"],
-        themeNoun : ["the future", "love", "drinking", "space travel", "the railroad", "your childhood", "summertime", "the ocean", "sexuality", "wanderlust", "war", "divorce", "nature", "pain", "hope", "a home", "a lover", "a friend", "a marriage", "family", "death"],
-        theme : ["#themeNoun# #themeAdj#"],
-        weatherSentence : ["You recall #themeNoun# and #themeNoun#.", "It reminds you of the time you had #themeAdj# #themeNoun#.", "This is #musicAdj.a# #song# about #musicTopic#.", "#musicTopic.capitalize# is like #theme#, #musicAdj#.", "The singer's voice is #musicAdj#, #musicAdj#, yet #musicAdj#.", "#musicModifier.capitalize# #musicGenre# #instrument# #musicPlays# #musicAdv#."],
-        weatherDescription : ["#weatherSentence# #weatherSentence#"],
-        theWeather : ["#introTheWeather#<p class='weather'>Music plays. #[musicTopic:#theme#]weatherDescription#"],
-        react : ["shake", "moan", "cry", "scream", "wail", "rejoice", "dance", "cower", "howl"],
-
-        color : "orange blue white black grey purple indigo".split(" "),
-        animal : "spider raven crow scorpion coyote eagle owl lizard deer".split(" "),
-        concept : "#substance# #emotion# darkness love childhood time loss victory memory art thought belief life death caring".split(" "),
-        transitiveEmotion : ["fear", "regret", "long for", "love", "distrust", "trust", "envy", "care for"],
-        sense : ["feel", "hear", "see", "know"],
-
-        natureNoun : ["ocean", "mountain", "forest", "cloud", "river", "tree", "sky", "earth", "void", "desert"],
-        concreteNoun : ["#animal#", "#natureNoun#"],
-        verb : ["#transitiveEmotion#", "#react#"],
-        never : ["never", "never again", "hardly ever", "barely", "almost always", "always", "probably never", "even"],
-
-        glowing : ["glowing", "rising", "hovering", "pulsing", "blinking", "glistening"],
-        beingWith : ["talking to", "walking with", "listening to"],
-        weirdAdj : ["weird", "arcane", "dark"],
-        truly : ["safely", "truly", "legally", "ever", "already"],
-        person : ["angel", "woman", "man", "figure"],
-        character : ["#charAdj# #person#"],
-        charAdj : ["old", "young", "hooded", "headless", "dead-eyed", "faceless"],
-        charDescription : ["#never# #react.s# when they #sense# the #natureNoun#"],
-        arentReal : ["are illegal", "don't exist"],
-        ofCourse : ["obviously", "well, clearly", "seriously", "as we #truly# know", "as everybody knows"],
-
-        youKnow : ["#ofCourse#", "I mean", "well", "I guess", "you know", "#maybe#"],
-        episode : ["This is a story about #mc.a#. You know, the #mc# who #mcDesc#. Well, I was #beingWith# the #mc#, when we both saw this #myNoun#.  #glowing.capitalize#, #color#...well, more of #color.a#ish #color#.   We backed away because #ofCourse#, #myNoun.s# #arentReal#. That was the last we saw of it. #theWeather#  <p>You know, I miss the #myNoun#.  It was #evaluationAdj#.  I mean, #evaluationAdj#, for a #myNoun#.  #someday.capitalize#, I hope it comes back.  We'll see it, #glowing#, #color#...well, more of #color.a#ish #color#.  But it'll be back. #youKnow.capitalize#, #someday#. If not, #vagueReaction#. "],
-
-        anyway : ["anyway", "in such a world as this", "if it were truly so", "if anything ever was"],
-        butThen : ["but then", "if you could imagine", "for certain"],
-        ominousStatement : ["who could you #truly# #transitiveEmotion#, #anyway#?", "if you understand my meaning.", "everyone knows that.", "you had known that for years.", "you knew that already."],
-        recommend : ["mandate", "recommend", "advise", "suggest"],
-        asMyGrandmotherSaid : ["as #authority# always said", "as #authority# tells us", "as #recommend.ed# by #authority#"],
-        substance : "blood sand dust nothingness darkness light soil earth mud tar water bones flies honey".split(" "),
-        emotion : "fear love trust desire pride sorrow regret confusion glee happiness contentment terror anger rage jealousy".split(" "),
-        evaluationAdjBare : ["good", "great", "wonderful", "terrifying", "bewildering", "perfect", "beautiful", "terrible"],
-        evaluationAdj : ["just #evaluationAdjBare#", "pretty #evaluationAdjBare#", "#evaluationAdjBare#", "really #evaluationAdjBare#"],
-        maybe : ["I think", "maybe", "probably", "almost certainly"],
-        someday : ["in the end", "if the sun rises again", "when the time comes", "in a while", "eventually", "sooner or later"],
-        relative : ["mother", "father", "grandmother", "grandfather"],
-        authority : ["the government", "the sheriff's secret police", "the law", "the radiochip implanted in your mind", "the Constitution", "a secret, yet menacing government society", "your own #relative#", "my own #relative#"],
-        fullOf : ["full of", "covered in", "made of"],
-
-        vagueReaction : ["we all #react# and #react# in #emotion#", "it's about time", "it's #evaluationAdj#", "it's just so #evaluationAdj#", "I couldn't be happier", "isn't that #evaluationAdj#", "there's nothing that can be done", "but it hasn't always been that way", "but it won't always be that way"],
-        foo : ["#never# trust a #concreteNoun#. You can trust a #concreteNoun#, #maybe#", "I #verb#, therefore I am", "it's #concreteNoun.s# all the way down", "#concept# is the new #concept#", "the only good #concreteNoun# is a dead #concreteNoun#"],
-
-        saying : ["Don't #transitiveEmotion# the #myThing# because the #myThing# is #fullOf# #mySub#.  You will be #fullOf# #mySub#, too, #someday#.", "The #myThing# #react.s#.  The #myThing# #react.s#. The #myThing# #react.s# with #emotion# because it #sense.s# the #concept# that it will never have.", "We #sense# the #myThing# and #react# with #emotion#.  You #sense# the #myThing# and #react# with #emotion#.  The #myThing# #sense.s# you but does not #react#.", "The #natureNoun# is made of #mySub#. The #natureNoun# is made of #mySub#. We are all made of #mySub# and #vagueReaction#.", "[emo1:#transitiveEmotion#]#never.capitalize# #emo1# #concept#. Only ever #emo1# #concept#.  How could you #emo1# what you can #never# #sense#?"],
-        origin : ["#[myThing:#concreteNoun#][mySub:#substance#]saying#<p>Welcome to Night Vale. <p>...</p>#[mc:#character#][mcDesc:#charDescription#][myNoun:#concreteNoun#]episode#<p>...</p>Goodnight, Night Vale, goodnight."]
-    },
-
-    poem : {
-        move : ["flock", "race", "glide", "dance", "flee", "lie"],
-
-        bird : ["swan", "heron", "sparrow", "swallow", "wren", "robin"],
-        agent : ["cloud", "wave", "#bird#", "boat", "ship"],
-
-        transVerb : ["forget", "plant", "greet", "remember", "embrace", "feel", "love"],
-        emotion : ["sorrow", "gladness", "joy", "heartache", "love", "forgiveness", "grace"],
-        substance : ["#emotion#", "mist", "fog", "glass", "silver", "rain", "dew", "cloud", "virtue", "sun", "shadow", "gold", "light", "darkness"],
-        adj : ["fair", "bright", "splendid", "divine", "inseparable", "fine", "lazy", "grand", "slow", "quick", "graceful", "grave", "clear", "faint", "dreary"],
-        doThing : ["come", "move", "cry", "weep", "laugh", "dream"],
-
-        verb : ["fleck", "grace", "bless", "dapple", "touch", "caress", "smooth", "crown", "veil"],
-        ground : ["glen", "river", "vale", "sea", "meadow", "forest", "glade", "grass", "sky", "waves"],
-
-        poeticAdj : ["#substance#-#verb.ed#"],
-        poeticDesc : ["#poeticAdj#", "by #substance# #verb#'d", "#adj# with #substance#", "#verb.ed# with #substance#"],
-
-        ah : ["ah", "alas", "oh", "yet", "but", "and"],
-        on : ["on", "in", "above", "beneath", "under", "by"],
-
-punctutation: [",", ":", " ", "!", ".", "?"],
-
-        noun : ["#ground#", "#agent#"],
-        line : ["My #noun#, #poeticDesc#, my #adj# one", "More #adj# than #noun# #poeticDesc#", "#move.capitalize# with me #on# #poeticAdj# #ground#", "The #agent.s# #move#, #adj# and #adj#", "#poeticDesc.capitalize#, #poeticDesc#, #ah#, #poeticDesc#", "How #adj# is the #poeticDesc# #sub#", "#poeticDesc.capitalize# with #emotion#, #transVerb.s# the #noun#"],
-      poem: ["#line##punctutation#<br>#line##punctutation#<br>#line##punctutation#<br>#line#."],
-        origin : "#[sub:#noun#]poem#",
-    },
-
-    conference : {
-        "greetings" : ["Salud", "Bonjour", "Shalom", "Nihao", "Hello", "Aloha"],
-        "subjectAdj" : ["Digital", "Electronic", "Telekinetic", "Virtual", "Interactive"],
-        "subjectNoun" : ["Storytelling", "Narrative", "Intelligence", "Art", "Media", "Games"],
-        "subject" : ["#subjectAdj# #subjectNoun#", "#reimagining# #subjectAdj# #subjectNoun#"],
-        "reimagining" : ["Advancing", "The Future of", "Reimagining", "Inventing", "Reinventing", "New Directions in"],
-        "area" : ["Brazil", "Kauai", "Cape Verde", "Shanghai", "Barsoom", "Utopia", "Anchorage", "Europa", "Discworld", "world", "Miami", "Santa Cruz"],
-        "institute" : ["Academy", "Guild", "Symposium", "Hall", "Center", "University", "Laboratory", "Library", "Association"],
-        "conference" : ["Conference", "Workshop", "Symposium", "Forum"],
-        "place" : ["#area# #institute# of #subject#", "#subject# #institute# of #area#", "#conference# on #subject#"],
-
-        "controls" : ["keyboard", "mouse", "interpretive dance", "set of mechanical levers", "series of yelps and howls", "pattern of vocal ululations", "joystick", "Kinect", "EEG headset", "DDR mat", "Powerglove", "midi keyboard", "plastic guitar"],
-        "hardware" : ["Arduino", "Raspberry PI", "XBox360", "Android", "Altair 8800", "Commodore 64", "hacked toaster", "jail-broken iPhone", "Apple Lisa", "computer running Windows 95"],
-        "display" : ["shadow puppetry screen", "a set of teleprescence robots", "70mm film projector", "Sony Aibo", "vintage VCR", "Atari 2600", "Soviet-era military screen", "VirtualBoy", "Oculus Rift", "1957 oscilloscope", "1977 Apple II", "40ft projection"],
-        "showSpace" : ["the outside of DANM", "the inside of the DARC lab", "the DANM stairwell", "the women's restroom", "the UCSC cattle pens"],
-        "useCase" : ["exploring themes of #abstractThing#", "using the lens of #litDevice# from #field#", "in a one-time performance", "for the blind", "to be projected on #showSpace#", "played on a #hardware#", "running on a #hardware#", "shown on a #display#"],
-        "culturalProduction" : ["drama", "reality television show", "children's game", "playground rhyme", "poem", "novel", "jazz perfomance", "folk song", "puppet show", "opera", "theater performance", "poem", "musical production", "religious ceremony"],
-        "digitalArtifact" : ["webapp", "tabletop RPG", "open world game", "interactive #culturalProduction#", "digitally-enhanced #culturalProduction#", "hypertext fiction", "chose-your-own-adventure", "text adventure", "Flash-animated #culturalProduction#", "interactive #culturalProduction#", "Twine game"],
-        "litDevice" : ["iambic pentameter", "intersectional feminism", "alliteration", "parody", "the feeling of agency", "first-person narration", "magical realism", "unreliable narration", "foreshadowing", "irony", "frame stories", "breaking the fourth wall", "oral storytelling", "the 'hero' journey'", "the American dream", "gender roles", "plot structure", "character development", "the myth of Sisyphus", "the 'other'", "technological literacy", "narrative structure"],
-        "field" : ["the #nationality# diaspora", "contemporary American #culturalProduction.s#", "the #nationality#-American experience", "traditional #nationality# #culturalProduction.s#"],
-        "setting" : ["Edo Japan", "Medieval France", "graduate school", "the basement of the British Museum", "a neighborhood bar", "a suburban home", "a coffeeshop at closing time", "Weimar Germany", "a prison in an unnamed country", "1950s San Francisco", "pre-Columbian Mesoamerica", "ancient Egypt", "an era of space exploration", "a time far in the future", "a time before #abstractThing#", "London in the 60s", "high school in the 1980s", "the height of the drug wars"],
-        "abstractThing" : ["internal turmoil", "regret", "alcoholism", "body dysmorphia", "first dates", "coming-of-age", "passion", "love", "quiet desperation", "deperate loneliness", "hatred", "world-changing choices", "#nationality# imperialism", "#nationality# pride", "deep sorrows", "immeasurable loss", "rising hope", "boundless despair", "laughter", "societal disapproval", "instability", "difficult choices", "sacrifice", "cruel betrayal"],
-        "someDramaticStuff" : ["#abstractThing# in a time of #abstractThing#"],
-        "influence" : ["influence"],
-        "person" : ["a Mary-Sue character", "a strugging artist", "a teenage girl", "a nameless child", "an elderly woman", "an invisible observer", "an old man", "a young boy", "the author", "a cat", "a famous historical figure", "a high-ranking official"],
-        "aProtagonist" : ["#person#", "#person# lost in #setting#", "#person# in #setting#"],
-        "tellTheStory" : ["relate a tale", "paint a picture", "simulate the experience", "spin a story", "describe a world", "tell"],
-        "examination" : ["examination", "reimagining", "interpretation", "appropriation", "mythologization", "colonization", "deconstruction", "(de)#examination#", "(re)#examination#"],
-        "complexTopic" : ["#litDevice# in #field#"],
-        "system" : ["a neural network", "a procedural system", "an advanced AI", "a decision tree"],
-        "explore" : ["navigate", "control", "explore", "interact"],
-        "implementedOn" : ["as instantiated on", "proceduralized with", "controlled by", "simulated on"],
-        "project" : ["#litDevice.capitalize# and #litDevice# #tellTheStory# of #abstractThing# in this #digitalArtifact# about #aProtagonist#.", "#abstractThing.capitalize# in #setting# is explored with #litDevice# #implementedOn# a #digitalArtifact#.", "#useCase.capitalize#, #aProtagonist# is used to #tellTheStory# of #abstractThing# using #litDevice#, as #implementedOn# a #hardware#.", "A #examination# of #litDevice# to explore #abstractThing# in a #digitalArtifact#", "The user #explore.s# with #aProtagonist# and must defeat #abstractThing# using a #controls# to activate #abstractThing#, but can only experience their world through a #display#.", "A #culturalProduction# performed on #display#, which the user #explore.s# with a #controls#.", "A project to #tellTheStory# of #aProtagonist# and their #abstractThing#, with a #digitalArtifact#.", "#system.capitalize# to implement #litDevice# for #digitalArtifact.s#, #useCase#.", "A #examination# of themes of #abstractThing#,  using #litDevice# in a #digitalArtifact#.", "A #digitalArtifact# about #complexTopic#, #useCase#.", "A #digitalArtifact# using #litDevice# and #litDevice# to #tellTheStory# of #someDramaticStuff#"],
-        "nationality" : ["North #nationality#", "West #nationality#", "Outer #nationality#", "New #nationality#", "Mongolian", "Merovingian", "Californian", "Texan", "Viennese", "Indonesian", "Malaysian", "Gibraltan", "Roman", "Hungarian", "Transylvanian", "Iowan", "Minnesotan", "Guatemalan", "Cantonese", "Irish", "Caspian", "Eurasian", "Pan-American", "Frankish", "Byzantine", "Alexandrian", "Persian", "Mongolian"],
-        "titlePart" : ["#subjectAdj# ", "Psycho", "Out", "Neuro", "Tele", "Cyber", "Flash", "Re:", "De", "Un", "Dys"],
-        "titleNoun" : ["#culturalProduction#", " Spaces", "the Praxis", "Text", "the Text", "Academia", "Presence", "Experience", "the Divine", "the diaspora", "#field#", "#field#"],
-        "titleMod" : ["No", "Only", "New", "#titleVerb#"],
-        "titleVerb" : ["finding", "interrogating", "stabilizing", "navigating", "being", "uncovering", "mixing", "freeing", "appropriating", "searching"],
-        "title" : ["#titleMod# #titleNoun#", "#titlePart.capitalize##titlePart.capitalize##titleVerb# #titleNoun#", "#titlePart.capitalize##titleVerb.capitalize#"],
-
-        "projectDesc" : "<b>#title#:</b> #project#",
-        "origin" : "<h3>#greetings#, and welcome to the #place#</h3><p>Schedule:</p><p>#projectDesc#<p>#projectDesc#<p>#projectDesc#"
-    },
-
-    scifi : {
-
-        firstSyl : "B C D F G H J K L M N P Qu R S T V W X Y Z St Fl Bl Pr Kr Ll Chr Sk Br Sth Ch Dhr Dr Sl Sc Sh Thl Thr Pl Fr Phr Phl Wh".split(" "),
-        middleSyl : "an all ar art air aean af av ant app ab er en eor eon ent enth irt ian ion iont ill il ipp in is it ik ob ov orb oon ion uk uf un ull urk estr antr okl ackl".split(" "),
-        lastSyl : "a ia ea u y en am is on an o io i el ios ax ox ix ex izz ius ian ean ekang anth".split(" "),
-
-        butchName : ["Chesty", "Manley", "Brock", "Stone", "Brick", "Butch", "Bruce", "Steel", "Saber", "Tex", "Rock", "Drake", "Ace", "Knute", "Wolf", "Thorax", "Brad", "Abs", "Burt", "Slate", "Bret", "Duke"],
-
-        alienName : ["#firstSyl##middleSyl##lastSyl#", "#firstSyl##lastSyl#", "#firstSyl##lastSyl#-#firstSyl##lastSyl#"],
-
-        sexy : ["muscled", "sexy", "dark", "well-dressed", "masculine", "dramatic", "dramatically lit", "boyish", "burly", "handsome", "erotic", "many-bossomed", "supple", "nude"],
-        occupation : ["lumberjack", "firefighter", "scientist", "spy", "wizard", "radio broadcaster", "smuggler", "mechanic", "astronaut", "adventurer", "pirate", "cowboy", "vampire", "detective", "soldier", "marine", "doctor", "ninja", "waitress", "burlesque dancer", "ballerina", "opera singer", "gogo dancer", "rollerskater"],
-
-        physicsParticle : ["quark", "photon", "lepton", "muon"],
-        scienceVerb : ["evaporate", "decay", "phase-shift", "teleport", "destabilize", "sublimate"],
-        scienceBlargleStart : ["holo", "hyper", "transmuto", "digi", "nano", "electro", "transma", "magna"],
-
-        communicationDevice : ["#physicsParticle#-transmitter", "#scienceBlargleStart#phone", "#scienceBlargleStart#pager", "#scienceBlargleStart#beeper", "#scienceBlargleStart#view", "#scienceBlargleStart#scope", "#scienceBlargleStart#cam"],
-
-        shortTime : ["in a sec", "right now", "two clicks", "a moment's time", "the blink of an eye", "no time at all", "the time it takes a single unstable #physicsParticle# to #scienceVerb#", "#firstSyl##middleSyl#sday"],
-        conversationally : ["expressively", "noncommitally", "with relief", "dispassionately"],
-        mcResponded : ["'That was unexpected,' #mc# said.", "#mc# shrugged #conversationally#", "#mc# sighed #conversationally#"],
-
-        transitPlain : ["bus", "plane", "jet", "tram", "rail", "tube", "beam"],
-        transitMod : ["nonstop", "express", "commuter", "prismatic", "red-eye", "pneumatic", "crosstown"],
-        transportSystem : ["#scienceBlargleStart##transitPlain#", "#transitMod# #scienceBlargleStart# #transitPlain#"],
-        travelPlot : ["#mc# punched '#mcDestinationSystem#' into the #communicationDevice#. There was still one ticket left on the #transportSystem#, but he'd have to take a #transportSystem# the rest of the way to Planet #mcDestination#.'"],
-
-        vipTitle : ["Vice President", "Mr.", "Detective", "Senator", "Chairman", "Princess", "Lord", "Lady", "Professor", "Grand Inquisistor", "High Priest", "President"],
-        boss : ["#vipTitle# #alienName#"],
-
-        artFormBasic : ["novel", "sculpture", "film", "painting", "poem", "play"],
-        artForm : ["prisma#artFormBasic#", "holo#artFormBasic#", "photo#artFormBasic#", "hyper#artFormBasic#"],
-        artDemand : ["'Your #mcArt# is late, #mc#', shrieked #mcBoss# over the #communicationDevice#.", "'I need that #mcArt# by #shortTime#' yelled #mcBoss#.", "'Where's the #mcArt#, #mc#? You promised it'd be finished by last #firstSyl##middleSyl#sday,' #mcBoss#'s voice came through the #communicationDevice#."],
-        artQuest : ["The only thing that could really, I mean really, inspire a #mcArt# would be the famously #sexy# #occupation.s# of Planet #mcDestination# and for that, he'd have to go to the #mcDestinationSystem# system. #travelPlot#"],
-        artPlot : ["#artDemand#  'Yeah, I'll have it done in #shortTime#', #mc# promised, hanging up the #communicationDevice#. #mcResponded#.#[mcDestination:#alienName#][mcDestinationSystem:#alienName#]artQuest#"],
-
-        plot : ["#[mcArt:#artForm#][mcBoss:#boss#]artPlot#"],
-
-        origin : ["#[mc:#butchName#]plot#"]
-
-    },
-
 }
