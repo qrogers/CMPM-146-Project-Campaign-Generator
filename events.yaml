@@ -1,0 +1,45 @@
+bar_gossip:
+  reqs: [town]
+  results: [information_rumor]
+  
+old_ruins:
+  reqs: [information_rumor]
+  results: [information_event_location]
+  
+forest_clearing:
+  reqs: [information_rumor]
+  results: [map_to_treasure]
+  
+cave_system:
+  reqs: [information_rumor]
+  results: [information_hideout]
+  
+theft:
+  reqs: [information_event_location]
+  results: [intervention]
+  
+assassination:
+  reqs: [information_event_location]
+  results: [intervention]
+  
+deal:
+  reqs: [town, information_event_location]
+  results: [rare_item, town_gratitude]
+  
+revenge:
+  reqs: [intervention]
+  results: [information_hideout]
+  
+warning:
+  reqs: [intervention]
+  results: [information_event_location]
+
+hideout_raid:
+  reqs: [information_hideout]
+  results: [enemy_defeated]
+  
+cave_treasure:
+  reqs: [map_to_treasure]
+  results: [rare_item]
+  
+
