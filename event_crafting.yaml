@@ -1,0 +1,48 @@
+Party_State: #Initial party
+  party: [Cleric, Rogue, Mage, Warrior]  #Choose what story components or characters start off with
+  location: [Town] #Choose starter location
+  catalog: [] #a catalog dictionary that keeps track of story components
+
+Goals: [Victory]
+
+Location: [Forest, Plain, Swamp, Meadow, Dungeon, Crypt, Town, Ruins, City, Castle]
+Classes: [Barbarian, Bard, Cleric, Druid, Fighter, Mage, Monk, Paladin, Ranger,
+Sorcerer, Rogue, Warlock]
+Key_Event_Properties: [information_rumor, information_gained, key_item_clue, villain_added, npc_added, reward]
+
+
+Event:
+  Gossip at the bar for rumors:
+    reqs: [Town]
+    results: [npc_added, information_rumor, Ruins]
+
+  Arrive at ruins that contain a mob:
+    reqs: [Ruins, information_rumor]
+    results: [mob_encounter, information_key_item, theft_location]
+
+  Theft intervention:
+    reqs: [information_key_item, theft_location]
+    results: [reward, theives_halted]
+
+  Band of theives seek revenge:
+    reqs: [theives_halted]
+    results: [information_gained, theives_defeated]
+
+  Attack Thieves Hideout:
+    reqs: [theives_defeated, information_gained]
+    results: [Victory]
+
+#ignore these for now
+Key_Events: #used as queues for new events
+  Travel_Event:
+    reqs: []
+    branches: []
+
+  Information_Processed:
+    reqs: [information_gained]
+    branches: []
+
+  Rumor_Details:
+    reqs: [information_rumor]
+    branches:
+
