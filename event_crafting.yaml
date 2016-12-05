@@ -3,7 +3,7 @@ Party_State: #Initial party
   location: [Town] #Choose starter location
   catalog: [] #a catalog dictionary that keeps track of story components
 
-Goals: [reward]
+Goals: [Victory]
 
 Location: [Forest, Plain, Swamp, Meadow, Dungeon, Crypt, Town, Ruins, City, Castle]
 Classes: [Barbarian, Bard, Cleric, Druid, Fighter, Mage, Monk, Paladin, Ranger,

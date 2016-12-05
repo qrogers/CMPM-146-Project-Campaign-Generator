@@ -1,7 +1,5 @@
 import yaml
-import json
 from collections import namedtuple, defaultdict, OrderedDict
-from timeit import default_timer as time
 from heapq import heappop, heappush
 from math import inf
 
@@ -9,19 +7,27 @@ event_Cap = 5
 Event = namedtuple('Event', ['name', 'check', 'effect'])
 
 
-class Party_State(dict):
+class Party_State(OrderedDict):
 
     def __key(self):
         return tuple(list(self.items()))
 
     def __hash__(self):
-        return hash(self.items())
+        return hash(self.__key())
+
+    def __lt__(self, other):
+        return self.__key() > other.__key()
 
     def copy(self):
         new_state = Party_State()
         new_state.update(self)
         return new_state
 
+def mega_list(Party_State):
+    s_m_l = []
+    for group in Party_State:
+        s_m_l += Party_State[group]
+    return s_m_l
 
 def make_checker(rule):
     # Implement a function that returns a function to determine whether a state meets a
@@ -31,13 +37,13 @@ def make_checker(rule):
     def check(state):
         # This code is called by graph(state) and runs millions of times.
         # Tip: Do something with rule['Consumes'] and rule['Requires'].
-        condition = False
-        state_mega_list = state['party'] + state['catalog'] + state['location']
+        condition = True
+        state_mega_list = mega_list(state)
         for r in rule:
             if r == 'reqs':
-                for item in rule[r]:
-                    if item in state_mega_list:
-                        condition = True
+                for component in rule[r]:
+                    if component not in state_mega_list:
+                        condition = False
 
         return condition
 
@@ -52,11 +58,15 @@ def make_effector(rule):
     def effect(state):
         # This code is called by graph(state) and runs millions of times
         next_state = state.copy()
-
+        print("1.a:", state)
+        print("1.b:", next_state)
         for r in rule:
             if r == 'results':
-                for component in rule[r]:
-                    next_state['catalog'].append(component)
+                for result in rule[r]:
+                    print(result)
+                    next_state['catalog'].append(result)
+        print("2.a:", state)
+        print("2.b:", next_state)
 
         return next_state
 
@@ -69,8 +79,10 @@ def make_goal_checker(goal):
 
     def is_goal(state):
         # This code is used in the search process and may be called millions of times.
+        print("inside is goal", state)
         condition = True
-        state_mega_list = state['party'] + state['catalog'] + state['location']
+        state_mega_list = mega_list(state)
+
         for g in goal:
             if g not in state_mega_list:
                 condition = False
@@ -89,26 +101,31 @@ def graph(state):
             yield (r.name, r.effect(state))
 
 
-def heuristic(state):
-    # Implement your heuristic here!
-    return 0
+def heuristic(previous_state, action_taken, goals):
+    heuristic_value = 0
+    state_mega_list = mega_list(previous_state)
+    ##print("previous state", previous_state)
+    ##print("action taken", action_taken)
+    for goal in goals:
+        if goal in state_mega_list:
+            heuristic_value += 1
+    return heuristic_value
 
 
 def search(graph, state, is_goal, limit, heuristic):
     number_of_state_visits = 0
-    goals = event_Crafting['Goals']
 
     # The priority queue
     queue = [state]
-    print(state)
+    goals = event_Crafting["Goals"]
 
-    # The dictionary that will be returned with heuristic costs
+    # The dictionary that will be returned with the event lengths
     length_costs = {}
-    length_costs[tuple(state)] = 0
+    length_costs[tuple(mega_list(state))] = 0
 
     # The dictionary that will store the backpointers
     backpointers = {}
-    backpointers[tuple(state)] = None
+    backpointers[tuple(mega_list(state))] = None
 
     iterations_at_best_result = 0
     best_result_so_far = None
@@ -130,35 +147,37 @@ def search(graph, state, is_goal, limit, heuristic):
                 iterations_at_best_result = number_of_state_visits
 
         graph_valid_actions = graph(current_state)
+
         for gva in graph_valid_actions:
             number_of_state_visits += 1
-            print("reached")
-            #heuristic_value = heuristic(current_state, gva, goals)
+            heuristic_value = heuristic(current_state, gva, goals)
             #new_heuristic_cost = current_heuristic_cost + gva[2] + heuristic_value
 
-            # print("Heuristic Generated: ", heuristic_value, "\n")
 
-            if tuple(gva[1]) not in length_costs:
-                backpointers[tuple(gva[1])] = current_state
-                heappush(queue, tuple(gva[1]))
+            if tuple(mega_list(gva[1])) not in length_costs:
+                backpointers[tuple(mega_list(gva[1]))] = current_state
+                print(queue)
+                #heappush(queue, gva[1])
+                queue.append(gva[1])
+                print(queue)
+                print(gva[1], "mandate")
 
-        if best_result_so_far and is_goal(best_result_so_far):
-            print("Goal reached")
-            print("Final state: ", best_result_so_far)
-            print("Final Length: ", length_costs[tuple(best_result_so_far)])
-            print("Number of State Visits at best solution found: ", iterations_at_best_result)
+    if best_result_so_far and is_goal(best_result_so_far):
+        print("Goal reached")
+        print("Final state: ", best_result_so_far)
+        print("Final Length: ", length_costs[tuple(best_result_so_far)])
+        print("Number of State Visits at best solution found: ", iterations_at_best_result)
 
-            while backpointers[best_result_so_far] != None:
-                print("Path: ", backpointers[best_result_so_far])
-                best_result_so_far = backpointers[best_result_so_far]
-            # print("Iterations: ", iterations)
-
-            return None
-        else:
+        while backpointers[best_result_so_far] != None:
+            print("Path: ", backpointers[best_result_so_far])
+            best_result_so_far = backpointers[best_result_so_far]
+                # print("Iterations: ", iterations)
+        return None
+    else:
             # Failed to find a path
-            print("Number of states searched ", number_of_state_visits)
-            print("Failed to find a path from", state, 'within time limit.')
-            return None
+        print("Number of states searched ", number_of_state_visits)
+        print("Failed to find a path from", state, 'within time limit.')
+        return None
 
 
 if __name__ == '__main__':
@@ -172,7 +191,7 @@ if __name__ == '__main__':
     print('Initial Party State:', event_Crafting['Party_State'])
 
     # Dict of crafting recipes (each is a dict):
-    print('Example event:','Gossip at the bar for rumors ->', event_Crafting['Event']['Gossip at the bar for rumors'])
+    ## print('Example event:','Gossip at the bar for rumors ->', event_Crafting['Event']['Gossip at the bar for rumors'])
 
     # Build rules
     all_events = []
@@ -191,7 +210,7 @@ if __name__ == '__main__':
 
     # Create a function which checks for the goal
     is_goal = make_goal_checker(event_Crafting['Goals'])
-
+    print("goals", event_Crafting['Goals'])
 
     # Search for a solution
     resulting_plan = search(graph, party_Status, is_goal, 600, heuristic)
