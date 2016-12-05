@@ -32,14 +32,11 @@ def make_checker(rule):
         # This code is called by graph(state) and runs millions of times.
         # Tip: Do something with rule['Consumes'] and rule['Requires'].
         condition = False
+        state_mega_list = state['party'] + state['catalog'] + state['location']
         for r in rule:
             if r == 'reqs':
                 for item in rule[r]:
-                    if item in state['party']:
-                        condition = True
-                    if item in state['location']:
-                        condition = True
-                    if item in state['catalog']:
+                    if item in state_mega_list:
                         condition = True
 
         return condition
@@ -73,15 +70,12 @@ def make_goal_checker(goal):
     def is_goal(state):
         # This code is used in the search process and may be called millions of times.
         condition = True
+        state_mega_list = state['party'] + state['catalog'] + state['location']
         for g in goal:
-            if g not in state['party']:
+            if g not in state_mega_list:
                 condition = False
 
-            if g not in state['catalog']:
-                condition = False
-
-            if g not in state['location']:
-                condition = False
+        return condition
 
     return is_goal
 
@@ -101,7 +95,6 @@ def heuristic(state):
 
 
 def search(graph, state, is_goal, limit, heuristic):
-    start_time = time()
     number_of_state_visits = 0
     goals = event_Crafting['Goals']
 
@@ -124,7 +117,7 @@ def search(graph, state, is_goal, limit, heuristic):
     # When you find a path to the goal return a list of tuples [(state, action)]
     # representing the path. Each element (tuple) of the list represents a state
     # in the path and the action that took you to this state
-    while time() - start_time < limit:
+    while queue:
         current_state = heappop(queue)
         if is_goal(current_state):
             print("Solution found")
@@ -152,7 +145,7 @@ def search(graph, state, is_goal, limit, heuristic):
         if best_result_so_far and is_goal(best_result_so_far):
             print("Goal reached")
             print("Final state: ", best_result_so_far)
-            print("Final Length: ", length_costs[best_result_so_far])
+            print("Final Length: ", length_costs[tuple(best_result_so_far)])
             print("Number of State Visits at best solution found: ", iterations_at_best_result)
 
             while backpointers[best_result_so_far] != None:
@@ -163,7 +156,7 @@ def search(graph, state, is_goal, limit, heuristic):
             return None
         else:
             # Failed to find a path
-            print(time() - start_time, 'seconds.', " Number of states searched ", number_of_state_visits)
+            print("Number of states searched ", number_of_state_visits)
             print("Failed to find a path from", state, 'within time limit.')
             return None
 
