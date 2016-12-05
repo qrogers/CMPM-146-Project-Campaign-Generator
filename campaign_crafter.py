@@ -2,12 +2,13 @@ import yaml
 from collections import namedtuple, defaultdict, OrderedDict
 from heapq import heappop, heappush
 from math import inf
+import copy
 
 event_Cap = 5
 Event = namedtuple('Event', ['name', 'check', 'effect'])
 
 
-class Party_State(OrderedDict):
+class Party_State(dict):
 
     def __key(self):
         return tuple(list(self.items()))
@@ -16,18 +17,15 @@ class Party_State(OrderedDict):
         return hash(self.__key())
 
     def __lt__(self, other):
-        return self.__key() > other.__key()
+        return self.__key() < other.__key()
 
-    def copy(self):
-        new_state = Party_State()
-        new_state.update(self)
-        return new_state
 
 def mega_list(Party_State):
     s_m_l = []
     for group in Party_State:
         s_m_l += Party_State[group]
     return s_m_l
+
 
 def make_checker(rule):
     # Implement a function that returns a function to determine whether a state meets a
@@ -57,7 +55,7 @@ def make_effector(rule):
 
     def effect(state):
         # This code is called by graph(state) and runs millions of times
-        next_state = state.copy()
+        next_state = copy.deepcopy(state)
         print("1.a:", state)
         print("1.b:", next_state)
         for r in rule:
@@ -65,6 +63,7 @@ def make_effector(rule):
                 for result in rule[r]:
                     print(result)
                     next_state['catalog'].append(result)
+
         print("2.a:", state)
         print("2.b:", next_state)
 
@@ -135,6 +134,7 @@ def search(graph, state, is_goal, limit, heuristic):
     # representing the path. Each element (tuple) of the list represents a state
     # in the path and the action that took you to this state
     while queue:
+        print("queue at start of loop:", queue)
         current_state = heappop(queue)
         if is_goal(current_state):
             print("Solution found")
@@ -150,17 +150,19 @@ def search(graph, state, is_goal, limit, heuristic):
 
         for gva in graph_valid_actions:
             number_of_state_visits += 1
+            print("gva start", number_of_state_visits)
             heuristic_value = heuristic(current_state, gva, goals)
+            print(heuristic_value)
             #new_heuristic_cost = current_heuristic_cost + gva[2] + heuristic_value
 
 
             if tuple(mega_list(gva[1])) not in length_costs:
                 backpointers[tuple(mega_list(gva[1]))] = current_state
-                print(queue)
                 #heappush(queue, gva[1])
                 queue.append(gva[1])
                 print(queue)
                 print(gva[1], "mandate")
+            print("gva end", number_of_state_visits)
 
     if best_result_so_far and is_goal(best_result_so_far):
         print("Goal reached")
@@ -192,6 +194,8 @@ if __name__ == '__main__':
 
     # Dict of crafting recipes (each is a dict):
     ## print('Example event:','Gossip at the bar for rumors ->', event_Crafting['Event']['Gossip at the bar for rumors'])
+    party_Status = Party_State()
+    party_Status = event_Crafting['Party_State']
 
     # Build rules
     all_events = []
@@ -202,8 +206,7 @@ if __name__ == '__main__':
         all_events.append(event)
 
     #sets party_Status to the dictionary of lists defined in yaml
-    party_Status = Party_State()
-    party_Status = event_Crafting['Party_State']
+
     print("party", party_Status['party'])
     print("location", party_Status['location'])
     print("catalog", party_Status['catalog'])
