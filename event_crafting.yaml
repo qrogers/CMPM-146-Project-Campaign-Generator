@@ -3,46 +3,36 @@ Party_State: #Initial party
   location: [Town] #Choose starter location
   catalog: [] #a catalog dictionary that keeps track of story components
 
-Goals: [Town, Ruins, Victory]
 
-Location: [Forest, Plain, Swamp, Meadow, Dungeon, Crypt, Town, Ruins, City, Castle]
-Classes: [Barbarian, Bard, Cleric, Druid, Fighter, Mage, Monk, Paladin, Ranger,
-Sorcerer, Rogue, Warlock]
-Key_Event_Properties: [information_rumor, information_gained, key_item_clue, villain_added, npc_added, reward]
+Goals: [Victory]
+Classes: [Barbarian, Bard, Cleric, Druid, Fighter, Mage, Monk, Paladin, Ranger, Sorcerer, Rogue, Warlock]
 
+#Key event properties and the values they can randomize to
+Key_Event_Properties:
+  information_Rumor: [Treasure_Rumor]
+  information_Gained: [Villain_Location]
+  information_Key_Item: [Bounty]
+  information_Location: [Ruins]
+
+Object_Create_Properties: [villain_Added, npc_Added, reward_Added, mob_Added]
 
 Event:
   Gossip at the bar for rumors:
     reqs: [Town]
-    results: [npc_added, information_rumor, Ruins]
+    results: [information_Rumor, information_Location]
 
   Arrive at ruins that contain a mob:
-    reqs: [Ruins, information_rumor]
-    results: [mob_encounter, information_key_item, theft_location]
+    reqs: [Ruins, Treasure_Rumor]
+    results: [ information_Key_Item]
 
   Theft intervention:
-    reqs: [information_key_item, theft_location]
-    results: [reward, theives_halted]
+    reqs: [Bounty]
+    results: [Reward, Theives_Stopped]
 
   Band of theives seek revenge:
-    reqs: [theives_halted]
-    results: [information_gained, theives_defeated]
+    reqs: [Theives_Stopped]
+    results: [information_Gained]
 
   Attack Thieves Hideout:
-    reqs: [theives_defeated, information_gained]
+    reqs: [Theives_Stopped, Villain_Location]
     results: [Victory]
-
-#ignore these for now
-Key_Events: #used as queues for new events
-  Travel_Event:
-    reqs: []
-    branches: []
-
-  Information_Processed:
-    reqs: [information_gained]
-    branches: []
-
-  Rumor_Details:
-    reqs: [information_rumor]
-    branches:
-
