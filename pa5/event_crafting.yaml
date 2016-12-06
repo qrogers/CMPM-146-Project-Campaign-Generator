@@ -1,0 +1,21 @@
+Party_State: [Warrior, Mage, Rogue, Cleric, ]
+
+Event:
+	Gossip at the bar:
+		reqs: [town]
+		props: [information_rumor]
+
+	Arrive at a deserted town:
+		reqs: [town]
+		props: [mystery_incentive]
+
+	Treasure in ruins:
+		reqs: [information_rumor]
+		props: [prop2, prop3]
+
+	Theft intervention:
+		reqs: [req1, req2, req3]
+		props: [prop2, prop3]
+
+	Retaliation:
+		reqs: []
