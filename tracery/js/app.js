@@ -24,7 +24,7 @@ $(document).ready(function() {
     }
 
     setTimeout(function() {
-        loadGrammar("dnd");
+        loadGrammar("short");
 
     }, 10);
 
