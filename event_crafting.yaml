@@ -5,28 +5,44 @@ Party_State: #Initial party
 
 
 Goals: [Victory]
+
 Classes: [Barbarian, Bard, Cleric, Druid, Fighter, Mage, Monk, Paladin, Ranger, Sorcerer, Rogue, Warlock]
 
 #Key event properties and the values they can randomize to
 Key_Event_Properties:
   information_Rumor: [Treasure_Rumor]
   information_Gained: [Villain_Location]
-  information_Key_Item: [Bounty]
+  information_Key_Item: [Theft_Plot]
   information_Location: [Ruins]
+  mob_Added: [Goblins]
 
-Object_Create_Properties: [villain_Added, npc_Added, reward_Added, mob_Added]
+#ignore this for now
+Object_Create_Properties: [villain_Added, npc_Added, reward_Added]
+
+#Event Syntax
+  #Name:
+  #  reqs: []
+  #  results: []
 
 Event:
   Gossip at the bar for rumors:
     reqs: [Town]
     results: [information_Rumor, information_Location]
 
-  Arrive at ruins that contain a mob:
+  Arrive at Ruins that contain treasure:
     reqs: [Ruins, Treasure_Rumor]
-    results: [ information_Key_Item]
+    results: [Treasure, information_Key_Item]
+
+  Arrive at Ruins that contain a mob:
+    reqs: [Ruins, Treasure_Rumor]
+    results: [mob_Added]
+
+  Battle Goblins throughout Ruins:
+    reqs: [Ruins, Goblins]
+    results: [information_Key_Item]
 
   Theft intervention:
-    reqs: [Bounty]
+    reqs: [Theft_Plot]
     results: [Reward, Theives_Stopped]
 
   Band of theives seek revenge:
