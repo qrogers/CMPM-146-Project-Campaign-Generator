@@ -136,6 +136,7 @@ def update_Keys(state, item):
 
     state['catalog'].append(new_Item)
 
+
 def recursive_heuristic(goals, previous_state, item_produced, iteration):
     iteration += 1
     remaining_Goals = []
@@ -158,6 +159,7 @@ def recursive_heuristic(goals, previous_state, item_produced, iteration):
         else:
             steps_needed = recursive_heuristic()
             return 1/steps_needed
+
 
 def heuristic(previous_state, action_taken, goals):
     print("action_Taken:", action_taken)
@@ -217,7 +219,7 @@ def search(graph, state, is_goal, limit, heuristic):
             if best_result_so_far != None:
                 print(tuple(mega_list(best_result_so_far)))
                 print(tuple(mega_list(current_state)))
-                if length_costs[tuple(mega_list(best_result_so_far))] < length_costs[tuple(mega_list(current_state))]:
+                if length_costs[tuple(mega_list(best_result_so_far))] > length_costs[tuple(mega_list(current_state))]:
                     best_result_so_far = current_state
                     iterations_at_best_result = number_of_state_visits
             else:
