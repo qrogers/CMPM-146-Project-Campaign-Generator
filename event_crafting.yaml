@@ -13,34 +13,32 @@ Classes: [Barbarian, Bard, Cleric, Druid, Fighter, Mage, Monk, Paladin, Ranger, 
 
 #Key event properties and the values they can randomize to
 Key_Event_Properties:
-  information_Rumor: [Treasure_Rumor, Sneak_Diss, Exploration_Contract, Target]
-  information_Gained: [Villain_Location]
-  information_Key_Item: [Theft_Plot]
-  information_Location: [Ruins, Magical Lake, Temple, Laboratory, Madman's Fortress, Mansion of Powerful NPC, Tavern, Demi-human Community, Palace of the Ruler,
-  Shacktown of the Oppressed, Inn, Craftsmen's Chambers, Church, Lost City, Military Encampment, Ruins, Classic Dungeon, Legendary Forest, Catacombs, Caves of the Magical Folk]
-  mob_Added: [Cat, Centaur, Chimera, Chuul, Cloaker, Cockatrice, Commoner, Constrictor Snake, Couatl,
-  Giant Wolf Spider, Giants, Gibbering Mouther, Gith, Gladiator, Gnolls, Gnome, Deep (Svirfneblin),
-  Hobgoblin Captain, Homunculus, Hook Horror, Hunter Shark, Hydra, Hyena, Intellect Devourer,
-  Lycanthropes, Mage, Magmin, Mammoth, Manticore, Mastiff, Medusa, Mephits, Merfolk,
-  Roper, Rug of Smothering, Rust Monster, Saber-Toothed Tiger, Sahuagin, Salamanders,
-  Tarrasque, Thri-Keen, Thug, Tiger, Treant, Tribal Warrior, Troglodyte, Troll, Umber Hulk, Unicorn]
+  information_Rumor: [Treasure_Rumor,Disrespect,Exploration_Contract,Target, EvilPlan]
+  information_Gained: [Villain_Location, Name, Escape_Plan, Location, Witness_Home, Clue, Evidence]
+  information_Key_Item: [Theft_Plot, Inventory, Funds, Ally, Artifact, Strength, Weapon]
+  Roll: [Win, Lose]
+  Dungeon_Items: [Monster, Water, Health, Food, Starvation, Hazard]
+
+  information_Location: [Ruins, Magical_Lake, Temple, Laboratory, Madmans_Fortress, Tavern, Demi-human_Community, Palace_of_the_Ruler, Church, Lost_City, Legendary_Forest, Classic_Dungeon]
+
+  mob_Added: [Centaur,Chimera,Druid,Kraken,Orc,Grimlock,Golem,Goblin,Vampire]
 
 #ignore this for now
 Object_Create_Properties: [villain_Added, npc_Added, reward_Added]
 
 #Event Syntax
   #Name:
-  #  reqs: []
+  # reqs: []
   # results: []
 
 Event:
   Gossip at the bar for rumors:
     reqs: [Town, Hometown]
-    results: [information_Rumor, information_Location]
+    results: [information_Rumor, information_Location] ### KEY ###
 
   Arrive at Ruins that contain treasure:
     reqs: [Ruins, Treasure_Rumor]
-    results: [Treasure, information_Key_Item]
+    results: [Treasure, information_Key_Item] ### KEY ###
 
   Arrive at Ruins that contain a mob:
     reqs: [Ruins, Treasure_Rumor]
@@ -48,7 +46,7 @@ Event:
 
   Battle Goblins throughout Ruins:
     reqs: [Ruins, Goblins]
-    results: [information_Key_Item]
+    results: [information_Key_Item] ### KEY ###
 
   Theft intervention:
     reqs: [Theft_Plot]
@@ -56,23 +54,27 @@ Event:
 
   Band of theives seek revenge:
     reqs: [Theives_Stopped]
-    results: [information_Gained]
+    results: [information_Gained] ### KEY ###
 
   Attack Thieves Hideout:
     reqs: [Theives_Stopped, Villain_Location]
     results: [Victory]
 
 ############## Clear Your Smeared Name#################
+  Listen to Town:
+    reqs: [Town]
+    results: [information_Rumor]
+    
   Investigate Name Smear:
-    reqs: [Sneak_Diss]
-    results: [suspect]
+    reqs: [Disrespect]
+    results: [information_Gained] ### KEY ###
 
   Interrogate Name Smearer:
-    reqs: [suspect]
-    results: [Diss_Reason, Evidence]
+    reqs: [Name]
+    results: [information_Gained] ### KEY ###
 
   Clear Name:
-    reqs: [Diss_Reason, Evidence]
+    reqs: [Name, Evidence]
     results: [Victory]
 
 ##############Escape from Prison#########################
@@ -86,39 +88,42 @@ Event:
 
   Inventory the Possessions:
     reqs: [routine]
-    results: [inventory]
+    results: [information_Key_Item] ### KEY ###
 
   Acquire Other Posessions They Need:
-    reqs: [routine, inventory]
+    reqs: [routine, Inventory]
     results: [acquired_other]
 
   Plan an Escape:
     reqs: [acquired_other]
-    results: [escape_plan]
+    results: [information_Gained] ### KEY ###
 
   Execute the Escape:
-    reqs: [escape_plan]
+    reqs: [routine,Inventory,escape_plan]
     results: [Victory]
 
 ###########Explore New Area##################
+  Talk to citizens for clues:
+    reqs: [Town]
+    results: [information_Rumor] ### KEY ###
   Found Contract:
     reqs: [Exploration_Contract]
     results: [start_exploring]
 
   Do research:
     reqs: [start_exploring]
-    results: [data]
+    results: [information_Gained] ### KEY ###
 
   Find someone who disappeared there:
-    reqs: [data]
+    reqs: [Location]
     results: [disappearance]
 
   Travel to location:
     reqs: [disappearance]
-    results: [destinationExploration]
+    results: [information_Location] ### KEY ###
 
   Chart Map:
-    reqs: [destinationExploration]
+    reqs: [Madmans_Fortress]
     results: [map]
 
   Turn in Map:
@@ -128,14 +133,14 @@ Event:
 ##################Protect Endangered####################
   Find and go to Target:
     reqs: [Target]
-    results: [TargetHome]
+    results: [information_Gained] ### KEY ###
 
   Investigate Home:
-    reqs: [TargetHome]
-    results: [clue]
+    reqs: [Witness_Home]
+    results: [information_Gained] ### KEY ###
 
   Ask neighbors about Clue:
-    reqs: [clue]
+    reqs: [Clue]
     results: [data]
 
   Form Conclusion with data:
@@ -162,7 +167,86 @@ Event:
     reqs: [breakout]
     results: [Victory]
     
+###################### Settle a Debt ##########################
+  Gamble:
+    reqs: [Town]
+    results: [Roll] ### KEY ###
 
+  Raise Money Lost:
+    reqs: [Lose]
+    results: [information_Key_Item] ### KEY ###
+
+  Repay Debt:
+    reqs: [Lose, Funds]
+    results: [Victory]
+
+############## SURVIVE AN ENVIRONMENT ##########################
+  You Are In A Hostile Environment:
+    reqs: [hostile_environment]
+    results: [Dungeon_Items] ### KEY ###
+
+  You Found Food. How about Water?:
+    reqs: [hostile_environment, Food]
+    results: [Dungeon_Items] ### KEY ###
+
+  You Found Food & Water:
+    reqs: [hostile_environment, Food, Water]
+    results: [Victory]
+
+##################### THWART MONSTROUS PLAN #########################
+  Start at Town:
+    reqs: [Town]
+    results: [information_Rumor] ### KEY ###
+
+  Get Word of Evil Plan:
+    reqs: [EvilPlan]
+    results: [information_Key_Item] ### KEY ###
+
+  Get Allies:
+    reqs: [EvilPlan, Ally]
+    results: [information_Key_Item] ### KEY ###
+
+  Get Artifact:
+    reqs: [EvilPlan, Ally, Artifact]
+    results: [information_Key_Item] ### KEY ###
+
+  Get Strong and Find Villain:
+    reqs: [EvilPlan, Ally, Artifact, Strength]
+    results: [information_Gained] ### KEY ###
+
+  Fight Villain:
+    reqs: [EvilPlan, Ally, Artifact, Strength, Villain_Location]
+    results: [Roll] ### KEY ###
+
+  Defeat Villain:
+    reqs: [EvilPlan, Ally, Artifact, Strength, Villain_Location, Win]
+    results: [Victory]
+
+################## SLAY DRAGON #####################################
+  You are at home:
+    reqs: [Town]
+    results: [information_Rumor] 
+
+  You hear about the Dragon Slayer:
+    reqs: [Treasure_Rumor]
+    results: [information_Gained] ### KEY ###
+
+  You pull a strange item from the stone:
+    reqs: [Treasure_Rumor, Location]
+    results: [information_Key_Item] ### KEY ###
+
+  You fight the dragon:
+    reqs: [Treasure_Rumor, Location, Weapon]
+    results: [Roll]  ### KEY ###
+
+  You defeat the dragon:
+    reqs: [Treasure_Rumor, Location, Weapon, Win]
+    results: [Victory]
+
+
+###################################################################
+#################EXTRANEOUS EVENTS#################################
+###################################################################
   Dying Delivery:
     reqs: [Streets, Wandering]
     results: [Meteor_Hammer, Elven_Chainmail]
