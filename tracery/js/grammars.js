@@ -155,9 +155,12 @@ var grammars = {
         // MINOR VILLAIN(S)
         vminor: "The Avenger, The Chief Assassin, The Childhood Friend With a Dark Secret, The Corrupted Hero, The Coward, The Hard-Eyed Advisor, The Inquisitor, The Lovable Rogue, The Misguided Moralist, The Mistress with the Heart of Gold, The Daughter with the Heart of Gold, The Moronic Muscleman, The Single-Minded Soldier, The Snivelling Vizier".split(", "),
 
-    // THE PLOT (Arrangement)
-    // The A-B-C Quest, The Accumulation of Elements, The Event
-    // The Geographic Progressions, The Series of Villains
+        // THE PLOT (Arrangement)
+        plot: "#abc#, #acc#, #theEvent#, #geoprog#, #servill#".split(", "),
+        abc: [],
+        acc: [],
+        theEvent: [],
+        geoprog: [],
 
     // GRAND FINALE: THE CLIMAX
     // Bloody Battle, Chase to Ground, Divine Retribution,
@@ -264,7 +267,7 @@ var grammars = {
     // Assassin-Beast, Beast Amok, Foreshadowing Monster
     // King Beast, Loving Deceiver, Noble Beast
     // Nocturnal Predator, Powerful Tester, Ravager
-    // Reconnaissnace Monster
+    // Reconnaissance Monster
     //
     // CHARACTER ENCOUNTERS
     // Bandit Gang, Belligerent Soldier, Blackmailer, Bureaucrat

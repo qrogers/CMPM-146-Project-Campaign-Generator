@@ -4,7 +4,9 @@ Party_State: #Initial party
   catalog: [] #a catalog dictionary that keeps track of story components
 
 
-Goals: [Victory]
+Goals: [Victory, Clear Name, Escape, Explore a New Area, Encounter Old Villain, Gain Money,
+Gain Power, Protect Endangered NPC(s), Rescue NPC(s), Retrieve Item, Settle a Debt,
+Survive Environment, Thwart Monstrous Plan, Win War]
 
 Classes: [Barbarian, Bard, Cleric, Druid, Fighter, Mage, Monk, Paladin, Ranger, Sorcerer, Rogue, Warlock]
 
@@ -14,43 +16,12 @@ Key_Event_Properties:
   information_Gained: [Villain_Location]
   information_Key_Item: [Theft_Plot]
   information_Location: [Ruins]
-  mob_Added: [Aarakocra, Aboleth, Acolyte, Adult Blue Dragon, Adult White Dragon, Air Elemental,
-  Ambush Drake, Angels, Animated Objects, Ankheg, Ape, Assassin, Awakened Shrug, Awakend Tree,
-  Axe Beak, Azbara Jos, Azer, Baboon, Badger, Bandit, Bandit Captain, Banshee, Basilisk, Bat
-  Behir, Beholders, Berserker, Black Bear, Blagothkus, Blights, Blink Dog, Blood Hawk,
-  Boar, Brown Bear, Bugbears, Bulette, Bullywug, Cambion, Camel, Captai Othelstan, Carrion Crawler,
-  Cat, Centaur, Chimera, Chuul, Cloaker, Cockatrice, Commoner, Constrictor Snake, Couatl, Crab,
-  Crawling Claw, Crocodile, Cult Fanantic, Cultist, Cyclops, Darkmantle, Death Dog, Death Knight,
-  Deer, Demilich, Demons, Devils, Dinosaurs, Dire Wolf, Displacer Beast, Doppelganger, Dracolich,
-  Draft Horse, Dragon Turtle, Dragon Shadow, Dragonclaw, Dragons, Dragonwing, Dralmorrer Borngray,
-  Drider, Druid, Dryad, Duergar, Eagle, Elementals, Elephant, Elk, Elves: Drow, Empyrean,
-  Ettercap, Ettin, Faerie Dragon, Flameskull, Flumph, Flying Snake, Fomorian, Four-Armed Troll,
-  Frog, Frulam Mondath, Fungi, Galeb Duhr, Gargoyle, Genies, Ghost, Ghouls, Giant Ape,
-  Giant Badger, Giat Bat, Giant Boar, Giant Centipede, Giant Constrictor Snake, Giant Crab,
-  Giant Crocodile, Giant Eagle, Giant Elk, Giant Fire Beetle, Giant Frog, Giant Goat, Giant Hyena,
-  Giant Lizard, Giant Octopus, Giant Owl, Giant Poisonous Snake, Giant Rat, Giant Scorpion,
-  Giant Sea Horse, Giant Shark, Giant Spider, Giant Toad, Giant Vulture, Giant Wasp, Giant Weasel,
+  mob_Added: [Cat, Centaur, Chimera, Chuul, Cloaker, Cockatrice, Commoner, Constrictor Snake, Couatl,
   Giant Wolf Spider, Giants, Gibbering Mouther, Gith, Gladiator, Gnolls, Gnome, Deep (Svirfneblin),
-  Goat, Goblins, Golems, Gorgon, Gray Ooze, Grell, Grick, Griffon, Grimlock, Guard, Guard Drake,
-  Hags, Half-Dragon, Harpy, Hawk, Hell Hound, Helmed Horror, Hippogriff, Hobgoblin,
   Hobgoblin Captain, Homunculus, Hook Horror, Hunter Shark, Hydra, Hyena, Intellect Devourer,
-  Invisible Stalker, Jackal, Jackalwere, Jamna Gleamsilver, Kenku, Killer Whale, Knight,
-  Kobold, Kraken, Kuo-toa, Lamia, Langdedrosa Cyanwrath, Lich, Lion, Lizard, Lizardfolk,
   Lycanthropes, Mage, Magmin, Mammoth, Manticore, Mastiff, Medusa, Mephits, Merfolk,
-  Merrow, Mimic, Mind Flayer, Minotaur, Modrons, Mule, Mummies, Myconides, Nagas,
-  Nightmare, Noble, Nothic, Octopus, Ogre, Oni, Oozes, Orc, Orcs, Otyugh, Owl, Owlbear,
-  Panther, Pegasus, Peryton, Pharblex Spattergoo, Phase Spider, Piercer, Pixie, Poisonous Snake,
-  Polar Bear, Pony, Priest, Pseudodragon, Purple Worm, Quaggoth, Quippler, Rakshasa, Rat,
-  Rath Modar, Raven, Reef Shark, Remorhaz, Revenant, Rezmir, Rhinoceros, Riding Horse, Roc,
   Roper, Rug of Smothering, Rust Monster, Saber-Toothed Tiger, Sahuagin, Salamanders,
-  Satyr, Scarecrow, Scorpion, Scout, Sea Horse, Shadow, Shambling Mound, Shield Guardian,
-  Skeletons, Slaadi, Specter, Sphinxes, Spider, Sprite, Spy, Stirger, Stone Giant, Stone Golem,
-  Succubus/Incubus, Swarm of Bats, Swarm of Centipedes, Swarm of Insects,
-  Swarm of Poisonous Snakes, Swarm of Quippers, Swarm of Rats, Swarm of Ravens, Talis the White,
-  Tarrasque, Thri-Keen, Thug, Tiger, Treant, Tribal Warrior, Troglodyte, Troll, Umber Hulk, Unicorn,
-  Vampire, Vampire Spawn, Vampires, Variants, Veteran, Violent Fungus, Vulture, Warhorse, Water Weird,
-  Weasel, Wight, Will-o'-Wisp, Winged Kobold, Winter Wolf, Wolf, Worg, Wraith, Wyvern, Xorn,
-  Yeti, Yuan-ti, Yuan-ti Malison, Yuan-ti Pureblood, Yugoloths, Zombies]
+  Tarrasque, Thri-Keen, Thug, Tiger, Treant, Tribal Warrior, Troglodyte, Troll, Umber Hulk, Unicorn]
 
 #ignore this for now
 Object_Create_Properties: [villain_Added, npc_Added, reward_Added]
@@ -58,11 +29,11 @@ Object_Create_Properties: [villain_Added, npc_Added, reward_Added]
 #Event Syntax
   #Name:
   #  reqs: []
-  #  results: []
+  # results: []
 
 Event:
   Gossip at the bar for rumors:
-    reqs: [Town]
+    reqs: [Town, Hometown]
     results: [information_Rumor, information_Location]
 
   Arrive at Ruins that contain treasure:
@@ -88,3 +59,206 @@ Event:
   Attack Thieves Hideout:
     reqs: [Theives_Stopped, Villain_Location]
     results: [Victory]
+
+  Dying Delivery:
+    reqs: [Streets, Wandering]
+    results: [Meteor_Hammer, Elven_Chainmail]
+
+  Grim Necessity:
+    reqs: []
+    results: [Curse, Padded_Armor, Breastplate]
+
+  Hero Offended:
+    reqs: []
+    results: [Property_Stolen, Magic_Gun, Iron_Helm]
+
+  Bloody Battle:
+    reqs: [Confrontation, Upset_Villain, Stonemail]
+    results: [Victory]
+
+  Chase to Ground:
+    reqs: [Flying_Dragon, Famous_Weapon]
+    results: [Victory]
+
+  Divine Retribution:
+    reqs: [Upset_Villain, Gods_Plea]
+    results: [Victory]
+
+  Prevented Deed:
+    reqs: [Captured]
+    results: [Confrontation]
+
+  Throne-room Duel:
+    reqs: [Confrontation, Famous_Weapon, Anger]
+    results: [Victory]
+
+  Encounter Assassin-Beast:
+    reqs: [Combat_Knife, Temple]
+    results: [Chainmail]
+
+  Dead Soldier:
+    reqs: [Lost_City]
+    results: [Chainmail, information_Rumor, munny]
+
+  Shopping With Mom:
+    reqs: [munny, Hometown]
+    results: [Chainmail, Combat_Knife, Leather_Armor]
+
+  Religious Rite:
+    reqs: [Repentance]
+    results: [Temple, Butcher_Axe, Cross_of_God]
+
+  Study:
+    reqs: [Inn, Tome]
+    results: [Secret_Knowledge]
+
+  Encounter Goblin:
+    reqs: [Venetian_Warhammer, Leather_Armor, Tavern]
+    results: [Retractable Longsword, Curse]
+
+  Encounter Death Knight:
+    reqs: [Broad_Shield, Kodachi, Bladed_Cape, Crossbow_Sniper, Mansion, Galagian_Greatsword]
+    results: [Famous_Weapon, Steambolt_Minigun]
+
+  Encounter Giant Toad:
+    reqs: [Chainmail, Kodachi, Magical_Lake]
+    results: [Kite_Shield, Battle_Musket]
+
+  Encounter Grimlock:
+    reqs: [Battle_Musket, Kite_Shield, Lost_City]
+    results: [Flamethrower, Double_Trident, Chitin_Armor]
+
+  Encounter Dragonwing:
+    reqs: [Flamethrower, Stonemail, Ruins]
+    results: [Battle_Musket, Harquebus, Flying_Dragon, Lost_City]
+
+  Encounter Adult Blue Dragon:
+    reqs: [Broadsword, Heavy_Plate, Dungeon]
+    results: [Flying_Dragon, Stonemail, Battle_Musket, Magical_Lake]
+
+  Encounter Weasel:
+    reqs: [Legendary_Forest]
+    results: [Iron_Helm, Combat_Knife]
+
+  Encounter Elephant:
+    reqs: [Combat_Knife, Leather_Armor, Lost_City]
+    results: [Venetian_Warhammer, Tavern]
+
+  Encounter Stone Giant:
+    reqs: [Catacombs, Battle_Musket]
+    results: [Splint_Mail, Studded_Leather, Buster_Sword]
+
+  Encounter Winter Wolf:
+    reqs: [Retractable_Longsword, Chain_Shirt, Legendary_Forest]
+    results: [Dungeon, Battlehammer, Scale_Mail]
+
+  Encounter Stone Golem:
+    reqs: [Madmans_Fortress, Sharkskin_Armor, Bazooka]
+    results: [Bazooka, Mini_Gatling, Hooked_Armor]
+
+  Encounter Rust Monster:
+    reqs: [Magical_Lake, Chain_Shirt, Chainblade, Catacombs]
+    results: [Shortlance, Kodachi, Banded_Mail]
+
+  Encounter Tribal Warrior:
+    reqs: [Elven_Chainmail, Retracting_Blade, Shacktown]
+    results: [Broad_Shield, Whip, Kite_Shield, Retractable_Bastard_Sword]
+
+  Encounter Warhorse:
+    reqs: [Full_Plate, Kodachi, Crossbow_Shielded, Caves]
+    results: [Rocket_Launcher, Dendritic_Crystal, Church, Lost_City]
+
+  Encounter Orcs:
+    reqs: [Mud_Armor, Chainblade, Military_Encampment]
+    results: [Kite_Shield, Kodachi, Meteor_Hammer]
+
+  Encounter Owl:
+    reqs: [Legendary_Forest]
+    results: [Combat_Knife, Palace, Padded_Leather]
+
+  Encounter Pseudodragon:
+    reqs: [Dungeon, Retractable_Bastard_Sword, Studded_Leather]
+    results: [Chitin_Armor, Crossbow_Sniper]
+
+  Encounter Troll:
+    reqs: [Chain_Shirt]
+    results: [Chainblade, Lost_City, Padded_Leather]
+
+  Encounter Tiger:
+    reqs: [Legendary_Forest, Combat_Knife]
+    results: [Leather_Armor, Kodachi]
+
+  Encounter Vulture:
+    reqs: [Ruins]
+    results: [Studded_Leather]
+
+  Encounter Vampire:
+    reqs: [Palace, Broad_Shield, Shortlance]
+    results: [Thorn_Sword, Hobgoblin_Warspear, Dueling_Cane, Bladed_Cape]
+
+  Encounter Owlbear:
+    reqs: [Legendary_Forest, Buster_Sword]
+    results: [Retractable_Longsword, Elven_Chainmail]
+
+  Encounter Kraken:
+    reqs: [Chitin_Armor, Magical_Lake, Steambolt_Minigun]
+    results: [Megaton_Hammer, Dendritic_Crystal]
+
+  Encounter Mammoth:
+    reqs: [Breastplate, Double_Trident, Lost_City]
+    results: [Caves, Temple, Mansion, Palace, Mammoth_Armor, Whaling_Cannon]
+
+  Encounter Rakshasa:
+    reqs: [Chain_Shirt, Broadsword, Shortlance, Lost_City]
+    results: [Crossbow_Shielded, Heavy_Shuriken_Thrower, Dendritic_Crystal]
+
+  Encounter Flameskull:
+    reqs: [Legendary_Forest]
+    results: [High_Tension_Longbow, Rocket_Launcher, Mud_Armor]
+
+  Encounter Killer_Whale:
+    reqs: [Hometown, Combat_Knife]
+    results: [Temple, Madmans_Fortress, Battle_Musket, Spidersilk]
+
+  Encounter Mage:
+    reqs: [Magical_Lake, Leather_Armor, Bazooka]
+    results: [Handcannon, Battle_Musket, Sniper_Rifle, Full_Plate]
+
+  Encounter Crocoile:
+    reqs: [Caves, Flamethrower]
+    results: [Shortlance, Retracting_Blade, Broad_Shield, Laboratory]
+
+  Encounter Gladiator:
+    reqs: [Palace, Kodachi]
+    results: [Cane, Chainblade, Thorn_Sword, Retractable_Longsword]
+
+  Encounter Cyclops:
+    reqs: [Lost_City, Battle_Musket, Mud_Armor]
+    results: [Scale_Mail, Shortlance, Buster_Sword, Mansion]
+
+  Encounter Fomorian:
+    reqs: [Catacombs, Hooked_Armor, Thorn_Sword, Double_Trident]
+    results: [Crossbow_Sniper, Steambolt_Minigun, Sniper_Rifle, Galagian_Greatsword]
+
+  Encounter Jackal:
+    reqs: [Legendary_Forest, Harquebus]
+    results: [Bazooka, Catacombs, Elven_Chainmail]
+
+  Encounter Druid:
+    reqs: [Catacombs, Thorn_Sword]
+    results: [Kite_Shield, Kodachi]
+
+  # ARMOR:
+  # Padded Leather, Studded Leather, Elven Chainmail, Chain Shirt, Spidersilk
+  # Nightscale, Chitine Web, Mud Armor, Sharkskin Armomr, Twist Cloth, Mammoth,
+  # Leather, Hooked Armor, Sectioned Armor, Scale Mail, Chainmail, Breastplate,
+  # Tentacled Hide, #Chitin Armor, Interlocking Scale, Tumblers Breastplate,
+  # Splint Mail, Banded Mail, Half-plate, Full Plate, Stonemail, Feeler Plate,
+  # Heavy Plate, Dendritic Crystal, Stone Plate, Interlocking Plate, Mountain Plate,
+  # Mechanus Gear
+
+# Character Encounters, Traps, Deathtraps, Red Herring, Omens & Prophecies, Chase, Cruel Tricks & Complications
+  # Locations: Magical Lake, Temple, Laboratory, Madman's Fortress,
+  # Mansion of Powerful NPC, Tavern, Demi-human Community, Palace of the Ruler,
+  # Shacktown of the Oppressed, Inn, Craftsmen's Chambers, Church, Lost City, Military Encampment,
+  # Ruins, Classic Dungeon, Legendary Forest, Catacombs, Caves of the Magical Folk,
