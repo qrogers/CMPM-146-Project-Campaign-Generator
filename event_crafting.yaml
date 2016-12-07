@@ -4,18 +4,20 @@ Party_State: #Initial party
   catalog: [] #a catalog dictionary that keeps track of story components
 
 
-Goals: [Victory, Clear Name, Escape, Explore a New Area, Encounter Old Villain, Gain Money,
-Gain Power, Protect Endangered NPC(s), Rescue NPC(s), Retrieve Item, Settle a Debt,
-Survive Environment, Thwart Monstrous Plan, Win War]
+Goals: [Victory]
+#, Clear Name, Escape, Explore a New Area, Encounter Old Villain, Gain Money,
+#Gain Power, Protect Endangered NPC(s), Rescue NPC(s), Retrieve Item, Settle a Debt,
+#Survive Environment, Thwart Monstrous Plan, Win War]
 
 Classes: [Barbarian, Bard, Cleric, Druid, Fighter, Mage, Monk, Paladin, Ranger, Sorcerer, Rogue, Warlock]
 
 #Key event properties and the values they can randomize to
 Key_Event_Properties:
-  information_Rumor: [Treasure_Rumor]
+  information_Rumor: [Treasure_Rumor, Sneak_Diss, Exploration_Contract, Target]
   information_Gained: [Villain_Location]
   information_Key_Item: [Theft_Plot]
-  information_Location: [Ruins]
+  information_Location: [Ruins, Magical Lake, Temple, Laboratory, Madman's Fortress, Mansion of Powerful NPC, Tavern, Demi-human Community, Palace of the Ruler,
+  Shacktown of the Oppressed, Inn, Craftsmen's Chambers, Church, Lost City, Military Encampment, Ruins, Classic Dungeon, Legendary Forest, Catacombs, Caves of the Magical Folk]
   mob_Added: [Cat, Centaur, Chimera, Chuul, Cloaker, Cockatrice, Commoner, Constrictor Snake, Couatl,
   Giant Wolf Spider, Giants, Gibbering Mouther, Gith, Gladiator, Gnolls, Gnome, Deep (Svirfneblin),
   Hobgoblin Captain, Homunculus, Hook Horror, Hunter Shark, Hydra, Hyena, Intellect Devourer,
@@ -59,6 +61,107 @@ Event:
   Attack Thieves Hideout:
     reqs: [Theives_Stopped, Villain_Location]
     results: [Victory]
+
+############## Clear Your Smeared Name#################
+  Investigate Name Smear:
+    reqs: [Sneak_Diss]
+    results: [suspect]
+
+  Interrogate Name Smearer:
+    reqs: [suspect]
+    results: [Diss_Reason, Evidence]
+
+  Clear Name:
+    reqs: [Diss_Reason, Evidence]
+    results: [Victory]
+
+##############Escape from Prison#########################
+  Get to Know Your Inmates:
+    reqs: [Town]
+    results: [intro]
+
+  Learn the Prison Routine:
+    reqs: [intro]
+    results: [routine]
+
+  Inventory the Possessions:
+    reqs: [routine]
+    results: [inventory]
+
+  Acquire Other Posessions They Need:
+    reqs: [routine, inventory]
+    results: [acquired_other]
+
+  Plan an Escape:
+    reqs: [acquired_other]
+    results: [escape_plan]
+
+  Execute the Escape:
+    reqs: [escape_plan]
+    results: [Victory]
+
+###########Explore New Area##################
+  Found Contract:
+    reqs: [Exploration_Contract]
+    results: [start_exploring]
+
+  Do research:
+    reqs: [start_exploring]
+    results: [data]
+
+  Find someone who disappeared there:
+    reqs: [data]
+    results: [disappearance]
+
+  Travel to location:
+    reqs: [disappearance]
+    results: [destinationExploration]
+
+  Chart Map:
+    reqs: [destinationExploration]
+    results: [map]
+
+  Turn in Map:
+    reqs: [map]
+    results: [Victory]
+
+##################Protect Endangered####################
+  Find and go to Target:
+    reqs: [Target]
+    results: [TargetHome]
+
+  Investigate Home:
+    reqs: [TargetHome]
+    results: [clue]
+
+  Ask neighbors about Clue:
+    reqs: [clue]
+    results: [data]
+
+  Form Conclusion with data:
+    reqs: [data]
+    results: [conclusion]
+
+  Get to stronghold:
+    reqs: [conclusion]
+    results: [strongholdarrived]
+
+  Break in stronghold:
+    reqs: [strongholdarrived]
+    results: [accessApproved]
+
+  Rescue Kidnappee:
+    reqs: [accessApproved]
+    results: [reachedKid]
+
+  Break out:
+    reqs: [reachedKid]
+    results: [breakout]
+
+  Reach Safety:
+    reqs: [breakout]
+    results: [Victory]
+    
 
   Dying Delivery:
     reqs: [Streets, Wandering]
@@ -248,6 +351,7 @@ Event:
     reqs: [Catacombs, Thorn_Sword]
     results: [Kite_Shield, Kodachi]
 
+  
   # ARMOR:
   # Padded Leather, Studded Leather, Elven Chainmail, Chain Shirt, Spidersilk
   # Nightscale, Chitine Web, Mud Armor, Sharkskin Armomr, Twist Cloth, Mammoth,
@@ -258,7 +362,4 @@ Event:
   # Mechanus Gear
 
 # Character Encounters, Traps, Deathtraps, Red Herring, Omens & Prophecies, Chase, Cruel Tricks & Complications
-  # Locations: Magical Lake, Temple, Laboratory, Madman's Fortress,
-  # Mansion of Powerful NPC, Tavern, Demi-human Community, Palace of the Ruler,
-  # Shacktown of the Oppressed, Inn, Craftsmen's Chambers, Church, Lost City, Military Encampment,
-  # Ruins, Classic Dungeon, Legendary Forest, Catacombs, Caves of the Magical Folk,
+  # Locations: 
