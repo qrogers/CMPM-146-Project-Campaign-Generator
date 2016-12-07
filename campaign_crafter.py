@@ -6,7 +6,7 @@ import copy
 import random
 
 event_Cap = 5
-Event = namedtuple('Event', ['name', 'check', 'effect', 'value'])
+Event = namedtuple('Event', ['name', 'check', 'effect'])
 
 
 class Party_State(OrderedDict):
@@ -86,53 +86,56 @@ def make_goal_checker(goal):
     return is_goal
 
 
-def make_heuristic_calculator(rule, goal):
-
-    def auto_heuristic(state):
-        heuristic_value = 0
-        state_mega_list = mega_list(state)
-        for r in rule:
-            if r == 'reqs':
-                for component in rule[r]:
-                    if component in goal:
-                        heuristic_value += 1
-
-
-        return heuristic_value
-
-    return auto_heuristic
-
 def graph(state):
     # Iterates through all recipes/rules, checking which are valid in the given state.
     # If a rule is valid, it returns the rule's name, the resulting state after application
     # to the given state, and the cost for the rule.
     for r in all_events:
         if r.check(state):
-            yield (r.name, r.effect(state), r.value(state))
+            yield (r.name, r.effect(state))
 
 
 def update_Keys(state, item):
     #Iterates through the state, checking for key events to alter before looking for
     #valid moves. Here is where events diverge
+
+    #Deletes the key_event item being targeted.
     print("Old:", item)
     state['catalog'].remove(item)
 
+    #Looks at possible branches from the removed key_event in it's respective list.
     branches = key_Event_Props[item]
     for branch in key_Event_Props[item]:
+        #remove branch components that already exist in catalog from possible branches
         if branch in state['catalog']:
             branches.remove(branch)
 
+
+    #If there are still possible branches, this event is valid.
     if branches:
-        new_Item = random.choice(branches)
+        print("branches:", branches)
+        best_Value = 0
+        best_Branch = ""
+        for branch in branches:
+            print("branch:", branch)
+            copy_State = copy.deepcopy(state)
+            copy_State['catalog'].append(branch)
+            branch_Value = heuristic(state, copy_State, goals)
+            print(branch_Value)
+            if(branch_Value > best_Value):
+                best_Value = branch_Value
+                best_Branch = branch
+        new_Item = best_Branch
+
+    #If there are no possible branches, then the event is marked as "Not_Valid"
+    #and does not get queued for further branching.
     else:
         new_Item = "Not_Valid"
 
-    print("New:", new_Item)
     state['catalog'].append(new_Item)
 
-
 def heuristic(previous_state, action_taken, goals):
-    heuristic_value = 0
+    heuristic_value = 1
     state_mega_list = mega_list(previous_state)
     for goal in goals:
         if goal in state_mega_list:
@@ -161,14 +164,14 @@ def search(graph, state, is_goal, limit, heuristic):
     best_result_so_far = None
     event_Cap_Satisfaction = False
     graph_number = 0
+
     # Implement your search here! Use your heuristic here!
     # When you find a path to the goal return a list of tuples [(state, action)]
     # representing the path. Each element (tuple) of the list represents a state
     # in the path and the action that took you to this state
     while queue:
-        current_heuristic_cost, reference_state, current_state = heappop(queue)
+        current_heuristic_value, reference_state, current_state = heappop(queue)
         print("Current State:", current_state)
-        # Iterates through party state looking for key_event_properties
 
         # Checks to see if the state matches goal criteria
         if is_goal(current_state):
@@ -198,18 +201,16 @@ def search(graph, state, is_goal, limit, heuristic):
             for item in key_Event_Props:
                 if item in mega_list(gva[1]):
                     update_Keys(gva[1], item)
-            #print("Post-Key:", gva[1])
 
             #If a key_component from the results of an event result in no new components, don't add to queue.
-
             if "Not_Valid" not in gva[1]['catalog']:
                 #print("Is_Valid")
                 if tuple(mega_list(gva[1])) not in length_costs:
                     length_costs[tuple(mega_list(gva[1]))] = length_costs[tuple(mega_list(current_state))] + 1
                     backpointers[tuple(mega_list(gva[1]))] = (gva[0] , current_state)
                     heuristic_value = heuristic(current_state, gva, goals)
-
-                    new_heuristic_cost = current_heuristic_cost + gva[2] + heuristic_value
+                    new_heuristic_cost = current_heuristic_value + heuristic_value
+                    print(new_heuristic_cost, gva[1])
                     heapify(queue)
                     heappush(queue,(new_heuristic_cost, tuple(mega_list(gva[1])), gva[1]))
 
@@ -251,8 +252,7 @@ if __name__ == '__main__':
     for name, rule in event_Crafting['Event'].items():
         checker = make_checker(rule)
         effector = make_effector(rule)
-        heuristic_calc = make_heuristic_calculator(rule, goals)
-        event = Event(name, checker, effector, heuristic_calc)
+        event = Event(name, checker, effector)
         print(event)
         all_events.append(event)
 
