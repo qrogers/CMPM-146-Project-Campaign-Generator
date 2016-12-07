@@ -38,13 +38,14 @@ def make_checker(rule):
         # Tip: Do something with rule['Consumes'] and rule['Requires'].
         condition = True
         state_mega_list = mega_list(state)
-        for r in rule:
-            if r == 'reqs':
-                for component in rule[r]:
-                    if component not in state_mega_list:
-                        condition = False
+        if rule is not None:
+            for r in rule:
+                if r == 'reqs':
+                    for component in rule[r]:
+                        if component not in state_mega_list:
+                            condition = False
 
-        return condition
+            return condition
 
     return check
 
@@ -120,7 +121,8 @@ def update_Keys(state, item):
             print("branch:", branch)
             copy_State = copy.deepcopy(state)
             copy_State['catalog'].append(branch)
-            branch_Value = heuristic(state, copy_State, goals)
+            action = (branch, copy_State)
+            branch_Value = heuristic(state, action, goals)
             print(branch_Value)
             if(branch_Value > best_Value):
                 best_Value = branch_Value
@@ -134,12 +136,50 @@ def update_Keys(state, item):
 
     state['catalog'].append(new_Item)
 
+
+def recursive_heuristic(goals, previous_state, item_produced, iteration):
+    iteration += 1
+    remaining_Goals = []
+    for gs in goals:
+        events_that_produce_item = [x for x in event_Crafting['Event'] if item_produced in event_Crafting['Event'][x]['results']]
+        if gs not in mega_list(previous_state):
+            remaining_Goals.append(gs)
+        else:
+            remaining_Goals.pop(gs)
+
+        #Events that result with the item_produced
+
+        for event in events_that_produce_item:
+            actual_rule = event_Crafting['Event'][event]
+            required_items = actual_rule['reqs']
+            remaining_Goals.append(required_items)
+
+        if len(remaining_Goals) != 0:
+            steps_needed = recursive_heuristic(remaining_Goals, previous_state, item_produced, iteration)
+        else:
+            steps_needed = recursive_heuristic()
+            return 1/steps_needed
+
+
 def heuristic(previous_state, action_taken, goals):
-    heuristic_value = 1
-    state_mega_list = mega_list(previous_state)
+    print("action_Taken:", action_taken)
+    heuristic_value = 1.0
+
+    if action_taken[0] not in event_Crafting['Event']:
+        items_Produced = [action_taken[0]]
+    else:
+        items_Produced = event_Crafting['Event'][action_taken[0]]['results']
+        print("1:", items_Produced)
+
+    #state_mega_list = mega_list(previous_state)
+    print("2:", items_Produced)
+
     for goal in goals:
-        if goal in state_mega_list:
-            heuristic_value += 1
+        if goal in items_Produced:
+            heuristic_value += 1.0
+
+    #heuristic_value += recursive_heuristic(goals, previous_state, items_Produced, 1)
+
     return heuristic_value
 
 
@@ -179,7 +219,7 @@ def search(graph, state, is_goal, limit, heuristic):
             if best_result_so_far != None:
                 print(tuple(mega_list(best_result_so_far)))
                 print(tuple(mega_list(current_state)))
-                if length_costs[tuple(mega_list(best_result_so_far))] < length_costs[tuple(mega_list(current_state))]:
+                if length_costs[tuple(mega_list(best_result_so_far))] > length_costs[tuple(mega_list(current_state))]:
                     best_result_so_far = current_state
                     iterations_at_best_result = number_of_state_visits
             else:
@@ -210,7 +250,6 @@ def search(graph, state, is_goal, limit, heuristic):
                     backpointers[tuple(mega_list(gva[1]))] = (gva[0] , current_state)
                     heuristic_value = heuristic(current_state, gva, goals)
                     new_heuristic_cost = current_heuristic_value + heuristic_value
-                    print(new_heuristic_cost, gva[1])
                     heapify(queue)
                     heappush(queue,(new_heuristic_cost, tuple(mega_list(gva[1])), gva[1]))
 
